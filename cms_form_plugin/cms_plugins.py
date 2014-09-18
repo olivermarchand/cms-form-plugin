@@ -3,6 +3,7 @@ from cms.plugin_pool import plugin_pool
 from cms.forms import fields
 from cms.utils import get_language_from_request
 from cms.forms.utils import get_page_choices
+import json
 
 from models import FormPlugin
 
@@ -86,7 +87,7 @@ class CMSFormPlugin(CMSPluginBase):
             form.invalid_url = request.POST['invalid_url']
             delattr(form, 'request')
             request.session[
-                'invalid_form_%s' % instance_id] = pickle.dumps(form, 2)
+                'invalid_form_%s' % instance_id] = json.dumps(form)
 
         if not response:
             response = HttpResponseRedirect(
@@ -114,7 +115,7 @@ class CMSFormPlugin(CMSPluginBase):
         if form is None:
             form = form_class()
         else:
-            form = pickle.loads(form)
+            form = json.loads(form)
 
         setattr(form, 'request', request)
             
