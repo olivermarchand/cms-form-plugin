@@ -86,7 +86,7 @@ class CMSFormPlugin(CMSPluginBase):
             form.invalid_url = request.POST['invalid_url']
             delattr(form, 'request')
             request.session[
-                'invalid_form_%s' % instance_id] = pickle.dumps(form)
+                'invalid_form_%s' % instance_id] = pickle.dumps(form, 0)
 
         if not response:
             response = HttpResponseRedirect(
