@@ -9,3 +9,5 @@ django-sekizai==0.7
 html5lib==1.0b3
 six==1.5.2
 wsgiref==0.1.2
+dill
+

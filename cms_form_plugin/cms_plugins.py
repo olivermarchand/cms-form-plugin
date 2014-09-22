@@ -14,7 +14,7 @@ from django.http import HttpResponseRedirect
 from django.core.exceptions import ImproperlyConfigured
 from django.forms import ModelForm
 
-import pickle
+import dill
 
 
 class CMSFormPluginForm(ModelForm):
@@ -86,7 +86,7 @@ class CMSFormPlugin(CMSPluginBase):
             form.invalid_url = request.POST['invalid_url']
             delattr(form, 'request')
             request.session[
-                'invalid_form_%s' % instance_id] = pickle.dumps(form, 2)
+                'invalid_form_%s' % instance_id] = dill.dumps(form, 2)
 
         if not response:
             response = HttpResponseRedirect(
@@ -114,7 +114,7 @@ class CMSFormPlugin(CMSPluginBase):
         if form is None:
             form = form_class()
         else:
-            form = pickle.loads(form)
+            form = dill.loads(form)
 
         setattr(form, 'request', request)
             
